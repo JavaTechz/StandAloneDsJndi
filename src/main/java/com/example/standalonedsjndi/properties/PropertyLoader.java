@@ -4,7 +4,12 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 public class PropertyLoader {
+	private static final Logger logger = LoggerFactory.getLogger(PropertyLoader.class);
+
 	public static Properties getProps() {
 
 		Properties prop = new Properties();
@@ -29,6 +34,7 @@ public class PropertyLoader {
 			System.out.println(prop.getProperty("dbpassword"));
 			return prop;
 		} catch (IOException ex) {
+			logger.info("loggin");
 			ex.printStackTrace();
 		} finally {
 			if (input != null) {
@@ -38,7 +44,7 @@ public class PropertyLoader {
 					e.printStackTrace();
 				}
 			}
-			
+
 		}
 		return prop;
 
@@ -54,6 +60,7 @@ public class PropertyLoader {
 			input = PropertyLoader.class.getClassLoader().getResourceAsStream(
 					filename);
 			if (input == null) {
+				logger.error("Sorry, unable to find " + filename);
 				System.out.println("Sorry, unable to find " + filename);
 				return;
 			}
